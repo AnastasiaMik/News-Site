@@ -28,7 +28,7 @@ class UserProfileEditView(UpdateView):
 class LinkListView(ListView):
     model = Link
     queryset = Link.with_votes.all()
-    paginate_by = 3
+    paginate_by = 3 #количество новостей на странице
     def get_context_data(self, **kwargs):
         context = super(LinkListView, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated():
