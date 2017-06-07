@@ -5,9 +5,9 @@ from django.contrib.auth import get_user_model
 
 class LinkAdmin(admin.ModelAdmin):
     pass
-admin.site.register(Link, LinkAdmin)
+admin.site.register(Link, LinkAdmin) #для входа на сайт администратор должен быть зарегистрирован
 
-class VoteAdmin(admin.ModelAdmin):
+class VoteAdmin(admin.ModelAdmin): #создание интерфейса администратора 
     pass
 admin.site.register(Vote, VoteAdmin)
 
@@ -18,5 +18,5 @@ class UserProfileInline(admin.StackedInline):
 class UserProfileAdmin(UserAdmin):
     inlines=(UserProfileInline, )
 
-admin.site.unregister(get_user_model())
-admin.site.register(get_user_model(), UserProfileAdmin)
+admin.site.unregister(get_user_model()) #получить модель регистрации пользователя, если не зарегистрирован
+admin.site.register(get_user_model(), UserProfileAdmin) #получить профиль администратора, если регистрация присутствует
