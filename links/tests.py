@@ -6,11 +6,16 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+from links.models import Link
 
+class ModelTestCase(TestCase):
+    def setUp(self):
+        self.link_title = 'Книжный парад'
+        self.link = Link(name=self.link_title)
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+    def test_model_created_link(self):
+        old_count = Link.objects.count()
+        self.link.save()
+        new_count = Link.objects.count()
+        self.assertNotEqual(old_count, new_count)
+        
