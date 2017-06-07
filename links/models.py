@@ -10,16 +10,16 @@ class LinkVoteCountManager(models.Manager):
             votes=Count('vote')).order_by('-rank_score', '-votes')
 
 class Link(models.Model):
-    title = models.CharField("Headline", max_length=100)
-    submitter = models.ForeignKey(User)
-    submitted_on = models.DateTimeField(auto_now_add=True)
-    rank_score = models.FloatField(default=0.0)
-    url = models.URLField("URL", max_length=250, blank=True)
-    description = models.TextField(blank=True)
-    with_votes = LinkVoteCountManager()
+    title = models.CharField("Headline", max_length=100) #заголовок, который виден всем
+    submitter = models.ForeignKey(User) #посетитель - внешний ключ в базе данных
+    submitted_on = models.DateTimeField(auto_now_add=True) #при почещении сайта дата/время ставится автоматически
+    rank_score = models.FloatField(default=0.0) #оценка, которая ставится новости
+    url = models.URLField("URL", max_length=250, blank=True) #позволяет передавать каждой новости ссылку на ее источник
+    description = models.TextField(blank=True) #позволяет добавлять к новости какое-либо описание
+    with_votes = LinkVoteCountManager() #подсчет кол-ва голосов
     objects = models.Manager()
 
-    def __unicode__(self):
+    def __unicode__(self): #передает строковое значение модели
         return self.title
     def get_absolute_url(self):
         return reverse("link_detail", kwargs={"pk": str(self.id)})
