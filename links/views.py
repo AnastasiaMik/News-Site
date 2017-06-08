@@ -70,16 +70,6 @@ class UserProfileDetailView(DetailView):
         UserProfile.objects.get_or_create(user=user)
         return user
 
-class JSONFormMixin(object):
-    def create_response(self, vdict=dict(), valid_form=True):
-        response = HttpResponse(json.dumps(vdict), content_type='application/json')
-        response.status = 200 if valid_form else 500
-        return response
-
-    def create_response(self, vdict=dict(), valid_form=True):
-        response = HttpResponse(json.dumps(vdict))
-        response.status = 200 if valid_form else 500
-        return response
 
     
 
