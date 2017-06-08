@@ -3,11 +3,6 @@ from django.contrib.auth.models import User
 from django.db.models import Count
 from django.core.urlresolvers import reverse
 
-class LinkVoteCountManager(models.Manager):
-    def get_query_set(self):
-        return super(LinkVoteCountManager, self).get_query_set().annotate(
-            votes=Count('vote')).order_by('-rank_score', '-votes')
-
 class Link(models.Model):
     title = models.CharField("Headline", max_length=100) #заголовок, который виден всем
     submitter = models.ForeignKey(User) #посетитель - внешний ключ в базе данных
