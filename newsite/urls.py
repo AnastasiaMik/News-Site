@@ -3,7 +3,6 @@ from django.contrib import admin
 from links.views import LinkListView, UserProfileDetailView, UserProfileEditView, LinkCreateView
 from django.contrib.auth.decorators import login_required as auth
 from links.views import LinkDetailView, LinkUpdateView, LinkDeleteView
-from links.views import VoteFormView
 
 
 admin.autodiscover()
@@ -27,6 +26,5 @@ urlpatterns = patterns('',
         name='link_update'),
     url(r'^link/delete/(?P<pk>\d+)/$', auth(LinkDeleteView.as_view()),
         name='link_delete'),
-    url(r'^vote/$', auth(VoteFormView.as_view()), name="vote"), 
     
 )
