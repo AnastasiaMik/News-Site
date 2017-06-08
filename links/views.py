@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import json
 from django.http import HttpResponse
 from .models import Link, Vote, UserProfile
 from django.views.generic import ListView, DetailView
@@ -11,7 +10,6 @@ from django.views.generic.edit import CreateView
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView, FormView
-from django.shortcuts import redirect, get_object_or_404
 
 
 class UserProfileEditView(UpdateView):
@@ -78,44 +76,11 @@ class JSONFormMixin(object):
         response.status = 200 if valid_form else 500
         return response
 
-class VoteFormBaseView(FormView):
-    form_class = VoteForm
-
     def create_response(self, vdict=dict(), valid_form=True):
         response = HttpResponse(json.dumps(vdict))
         response.status = 200 if valid_form else 500
         return response
 
-    def form_valid(self, form):
-##        user = self.request.user
-##        prev_votes = Vote.objects.filter(voter=user, link=link)
-##        has_voted = (prev_votes.count() > 0)
-##
-##        if not has_voted: # добавляет голос
-##            Vote.objects.create(voter=user, link=link)
-##            print("voted")
-##        else: # удаляет голос
-##            prev_votes[0].delete()
-##            print("unvoted")
-        link = get_object_or_404(Link, pk=form.data["link"])
-        user = self.request.user
-        prev_votes = Vote.objects.filter(voter=user, link=link)
-        has_voted = (len(prev_votes) > 0)
-
-        ret = {"success": 1}
-        if not has_voted: # добавляется голос
-            v = Vote.objects.create(voter=user, link=link)
-            ret["voteobj"] = v.id
-        else: # удаляется голос
-            prev_votes[0].delete()
-            ret["unvoted"] = 1
-            return self.create_response(ret, True)
-
-    def form_invalid(self, form):
-        ret = {"success": 0, "form_errors": form.errors }
-        return self.create_response(ret, False)
-
-class VoteFormView(JSONFormMixin, VoteFormBaseView):
-    pass
+    
 
     
