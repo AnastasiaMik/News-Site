@@ -11,6 +11,3 @@ class LinkForm(forms.ModelForm):
         model = Link
         exclude = ("submitter", "rank_score") 
 
-class VoteForm(forms.ModelForm):
-    class Meta:
-        model = Vote
